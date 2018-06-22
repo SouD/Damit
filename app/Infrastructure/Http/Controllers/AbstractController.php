@@ -19,9 +19,6 @@ abstract class AbstractController extends Controller
      */
     protected $isAdmin = false;
 
-    /**
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware(function ($request, $next) {

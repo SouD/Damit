@@ -8,11 +8,8 @@ use Infrastructure\Repository\AbstractRepository as Repository;
  */
 class AuthTokenRepository extends Repository
 {
-    /**
-     * @return void
-     */
-    public function __construct()
+    public function __construct(string $model = AuthToken::class)
     {
-        parent::__construct(AuthToken::class);
+        parent::__construct($model);
     }
 }

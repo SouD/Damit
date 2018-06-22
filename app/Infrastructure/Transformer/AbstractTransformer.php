@@ -10,6 +10,5 @@ abstract class AbstractTransformer
 
     public function __construct()
     {
-
     }
 }
