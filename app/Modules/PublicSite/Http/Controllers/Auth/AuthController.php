@@ -79,10 +79,7 @@ class AuthController extends Controller
 
         if ($user) {
             return response()->json([
-                'user' => array_merge(
-                    UserPresenter::present($user, $this->guard()->check()),
-                    ['created' => $user->created]
-                ),
+                'user' => $user,
                 'token' => $token,
             ]);
         } else {
@@ -108,6 +105,6 @@ class AuthController extends Controller
      */
     protected function username(): string
     {
-        return R::route('provider', AuthProviderName::EMAIL);
+        return R::route('provider') ?: AuthProviderName::EMAIL;
     }
 }

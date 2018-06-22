@@ -4,7 +4,6 @@ namespace Infrastructure\Auth;
 use Domain\User\Auth\AuthProviderName;
 use Domain\User\Auth\AuthTokenRepository;
 use Illuminate\Auth\Events\Authenticated as AuthenticatedEvent;
-use Illuminate\Auth\Events\Failed as FailedEvent;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
 use Illuminate\Auth\TokenGuard as BaseGuard;
@@ -80,8 +79,6 @@ class TokenGuard extends BaseGuard
 
             return true;
         } else {
-            $this->fireFailedEvent($user, $credentials);
-
             return false;
         }
     }
@@ -132,15 +129,6 @@ class TokenGuard extends BaseGuard
     public function fireAuthenticatedEvent(Authenticatable $user): void
     {
         event(new AuthenticatedEvent($user));
-    }
-
-    /**
-     * @param Authenticatable $user
-     * @param array           $credentials
-     */
-    public function fireFailedEvent(Authenticatable $user, array $credentials): void
-    {
-        event(new FailedEvent($user, $credentials));
     }
 
     /**

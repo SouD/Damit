@@ -2,6 +2,7 @@
 namespace Infrastructure\Auth\Strategy;
 
 use Illuminate\Auth\Events\Attempting as AttemptEvent;
+use Illuminate\Auth\Events\Failed as FailedEvent;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,11 @@ abstract class AbstractStrategy implements StrategyContract
     public function fireAttemptEvent(Authenticatable $user): void
     {
         event(new AttemptEvent($user, false));
+    }
+
+    public function fireFailedEvent(Authenticatable $user, array $credentials): void
+    {
+        event(new FailedEvent($user, $credentials));
     }
 
     public function getProvider(): UserProvider

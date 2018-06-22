@@ -15,6 +15,12 @@ interface StrategyContract
     public function fireAttemptEvent(Authenticatable $user): void;
 
     /**
+     * @param Authenticatable $user
+     * @param array           $credentials
+     */
+    public function fireFailedEvent(Authenticatable $user, array $credentials): void;
+
+    /**
      * @param array $credentials
      *
      * @return Authenticatable|null

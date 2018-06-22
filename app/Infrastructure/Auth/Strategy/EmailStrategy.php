@@ -18,6 +18,8 @@ class EmailStrategy extends AbstractStrategy
             if ($this->provider->validateCredentials($user, $credentials)) {
                 return $user;
             } else {
+                $this->fireFailedEvent($user, $credentials);
+
                 return null;
             }
         } else {
