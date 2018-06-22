@@ -3,8 +3,15 @@
 use Illuminate\Http\Request;
 
 Route::group(['prefix' => '0.1'], function () {
-    Route::get('test', function () {
-        return response()->json(\Domain\User\User::find(1)->load(['roles', 'authProviders', 'authTokens']));
+    Route::group(['prefix' => 'test'], function () {
+        Route::get('/', function () {
+            return response()->json(\Domain\User\User::find(1)->load(['roles', 'authProviders', 'authTokens']));
+        });
+        Route::get('auth', function () {
+            $user = Auth::user();
+            
+            return response()->json($user);
+        });
     });
     Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
         Route::post('login/{provider?}', [

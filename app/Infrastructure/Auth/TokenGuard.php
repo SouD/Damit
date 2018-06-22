@@ -41,10 +41,10 @@ class TokenGuard extends BaseGuard
 
     public function getTokenForRequest()
     {
-        $token = $this->request->header('Authorization');
+        $token = $this->request->bearerToken();
 
         if (empty($token)) {
-            $token = $this->request->bearerToken();
+            $token = $this->request->header('Authorization');
         }
 
         if (empty($token)) {

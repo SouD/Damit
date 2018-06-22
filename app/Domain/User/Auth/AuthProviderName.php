@@ -17,4 +17,12 @@ class AuthProviderName extends Wrapper
      * @var string
      */
     const FACEBOOK = 'facebook';
+
+    /**
+     * @return string
+     */
+    public static function getRouteKeyName(): string
+    {
+        return 'provider';
+    }
 }

@@ -80,7 +80,6 @@ class AuthController extends Controller
         if ($user) {
             return response()->json([
                 'user' => $user,
-                'token' => $token,
             ]);
         } else {
             throw new LogicException('Login successful but user not set!');
@@ -105,6 +104,6 @@ class AuthController extends Controller
      */
     protected function username(): string
     {
-        return R::route('provider') ?: AuthProviderName::EMAIL;
+        return R::route(AuthProviderName::getRouteKeyName()) ?: AuthProviderName::EMAIL;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace PublicSite\Http\Requests\Auth;
 
+use Domain\User\Auth\AuthProviderName;
 use Infrastructure\Http\Requests\AbstractFormRequest as FormRequest;
 
 class LoginRequest extends FormRequest
@@ -12,9 +13,16 @@ class LoginRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
-        ];
+        $provider = $this->route(AuthProviderName::getRouteKeyName()) ?: AuthProviderName::EMAIL;
+        $rules = [];
+
+        if (AuthProviderName::EMAIL === $provider) {
+            $rules = [
+                'email' => ['required', 'email'],
+                'password' => ['required', 'string'],
+            ];
+        }
+
+        return $rules;
     }
 }
