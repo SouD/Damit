@@ -10,6 +10,8 @@ use Infrastructure\Model\AbstractQuery as Query;
  */
 class UserQuery extends Query
 {
+    protected $modelClass = User::class;
+
     /**
      * @return array
      */
@@ -56,10 +58,5 @@ class UserQuery extends Query
                 ->byEmail($email)
                 ->first();
         }
-    }
-
-    public function getModelClass(): string
-    {
-        return User::class;
     }
 }

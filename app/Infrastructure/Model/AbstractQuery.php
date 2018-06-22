@@ -11,14 +11,14 @@ use Rebing\GraphQL\Support\Query;
 abstract class AbstractQuery extends Query
 {
     /**
+     * @var string
+     */
+    protected $modelClass;
+
+    /**
      * @var AbstractRepository|null
      */
     protected $repository;
-
-    /**
-     * @return string
-     */
-    abstract public function getModelClass(): string;
 
     /**
      * @throws Exception
@@ -31,7 +31,7 @@ abstract class AbstractQuery extends Query
             return $this->repository;
         }
 
-        if (($model = $this->getModelClass())) {
+        if (($model = $this->modelClass)) {
             $repositoryClass = $model . 'Repository';
 
             $this->repository = app()->make($repositoryClass, compact('model'));

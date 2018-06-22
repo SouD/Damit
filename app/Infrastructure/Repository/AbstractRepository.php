@@ -12,7 +12,7 @@ abstract class AbstractRepository
     /**
      * @var string
      */
-    protected $model;
+    protected $modelClass;
 
     /**
      * @var \Illuminate\Database\Eloquent\Builder
@@ -20,12 +20,12 @@ abstract class AbstractRepository
     protected $query;
 
     /**
-     * @param string $model
+     * @param string $modelClass
      */
-    public function __construct(string $model)
+    public function __construct(string $modelClass)
     {
-        $this->model = $model;
-        $this->query = forward_static_call([$model, 'query']);
+        $this->modelClass = $modelClass;
+        $this->query = forward_static_call([$modelClass, 'query']);
     }
 
     public function reset(): void
@@ -41,7 +41,7 @@ abstract class AbstractRepository
      */
     public function create(array $attributes): Model
     {
-        return forward_static_call([$this->model, 'create'], $attributes);
+        return forward_static_call([$this->modelClass, 'create'], $attributes);
     }
 
     /**
