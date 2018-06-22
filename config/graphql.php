@@ -1,6 +1,6 @@
 <?php
 
-use Domain\User\UserQuery;
+use Domain\User\Query\UserQuery;
 use Domain\User\UserType;
 
 return [

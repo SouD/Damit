@@ -1,6 +1,7 @@
 <?php
-namespace Domain\User;
+namespace Domain\User\Query;
 
+use Domain\User\User;
 use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Infrastructure\Model\AbstractQuery as Query;
@@ -10,6 +11,9 @@ use Infrastructure\Model\AbstractQuery as Query;
  */
 class UserQuery extends Query
 {
+    /**
+     * @var string
+     */
     protected $modelClass = User::class;
 
     /**

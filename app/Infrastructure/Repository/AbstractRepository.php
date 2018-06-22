@@ -15,7 +15,7 @@ abstract class AbstractRepository
     protected $modelClass;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Builder
+     * @var Builder
      */
     protected $query;
 

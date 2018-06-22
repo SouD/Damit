@@ -6,13 +6,14 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Infrastructure\Concern\HasGuard;
 
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
 abstract class AbstractController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, HasGuard;
 
     /**
      * @var bool
@@ -28,15 +29,5 @@ abstract class AbstractController extends Controller
 
             return $next($request);
         });
-    }
-
-    /**
-     * @param string|null $guard
-     *
-     * @return mixed
-     */
-    protected function guard(string $guard = null)
-    {
-        return Auth::guard($guard);
     }
 }

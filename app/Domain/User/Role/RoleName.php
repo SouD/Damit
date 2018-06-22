@@ -1,13 +1,15 @@
 <?php
 namespace Domain\User\Role;
 
-use Infrastructure\AbstractConstantWrapper as Wrapper;
+use Infrastructure\Concern\HasConstants;
 
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
-class RoleName extends Wrapper
+class RoleName
 {
+    use HasConstants;
+
     /**
      * @var string
      */

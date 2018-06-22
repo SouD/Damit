@@ -1,5 +1,5 @@
 <?php
-namespace Infrastructure;
+namespace Infrastructure\Concern;
 
 use Illuminate\Support\Collection;
 use ReflectionClass;
@@ -7,7 +7,7 @@ use ReflectionClass;
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
-abstract class AbstractConstantWrapper
+trait HasConstants
 {
     /**
      * @return Collection

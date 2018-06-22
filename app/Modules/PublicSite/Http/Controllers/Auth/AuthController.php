@@ -106,4 +106,14 @@ class AuthController extends Controller
     {
         return R::route(AuthProviderName::getRouteKeyName()) ?: AuthProviderName::EMAIL;
     }
+
+    /**
+     * @param string|null $guard
+     *
+     * @return mixed
+     */
+    protected function guard(string $guard = null)
+    {
+        return $this->getGuard($guard);
+    }
 }
