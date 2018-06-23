@@ -14,7 +14,7 @@ trait HasGuard
      *
      * @return Guard|null
      */
-    public function getGuard(string $guard = null): ?Guard
+    protected function guard(string $guard = null): ?Guard
     {
         return Auth::guard($guard);
     }

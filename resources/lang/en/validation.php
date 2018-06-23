@@ -129,5 +129,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'E-Mail Address',
+        'password' => 'Password',
+        'token' => 'Token',
+        'provider' => 'Provider',
+        'providerId' => 'Provider ID',
+    ],
 ];

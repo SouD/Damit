@@ -68,7 +68,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
@@ -76,7 +76,7 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function authProviders()
+    public function authProviders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AuthProvider::class);
     }
@@ -84,9 +84,19 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function authTokens()
+    public function authTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AuthToken::class);
+    }
+
+    /**
+     * @return AuthToken|null
+     */
+    public function newestAuthToken(): ?AuthToken
+    {
+        return $this->authTokens()
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 
     /***************************************************************************

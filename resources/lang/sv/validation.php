@@ -141,5 +141,10 @@ return [
     */
 
     'attributes' => [
+        'email' => 'E-postadress',
+        'password' => 'Lösenord',
+        'token' => 'Nyckel',
+        'provider' => 'Leverantör',
+        'providerId' => 'Leverantörs-ID',
     ],
 ];

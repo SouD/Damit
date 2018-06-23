@@ -10,6 +10,10 @@ class EmailStrategy extends AbstractStrategy
 {
     public function getUser(array $credentials): ?Authenticatable
     {
+        $credentials = array_only($credentials, [
+            'email', 'password',
+        ]);
+
         $user = $this->provider->retrieveByCredentials($credentials);
 
         if ($user) {

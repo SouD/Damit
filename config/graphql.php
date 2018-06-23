@@ -1,20 +1,15 @@
 <?php
 
+use Domain\User\Auth\AuthTokenType;
 use Domain\User\Query\UserQuery;
 use Domain\User\UserType;
+use Infrastructure\Auth\Mutation\LoginMutation;
+use Rebing\GraphQL\GraphQLController;
 
 return [
     'prefix' => 'graphql',
-    'routes' => [
-        'query' => 'query/{graphql_schema?}',
-        'mutation' => 'mutation/{graphql_schema?}',
-    ],
-    // 'routes' => '{graphql_schema?}',
-    'controllers' => [
-        'query' => \Rebing\GraphQL\GraphQLController::class . '@query',
-        'mutation' => \Rebing\GraphQL\GraphQLController::class . '@mutation',
-    ],
-    // 'controllers' => \Rebing\GraphQL\GraphQLController::class . '@query',
+    'routes' => '{graphql_schema?}',
+    'controllers' => GraphQLController::class . '@query',
     'middleware' => ['api'],
     'default_schema' => 'default',
 
@@ -58,22 +53,30 @@ return [
     //
     'schemas' => [
         'default' => [
-            'query' => [
-                'user' => UserQuery::class,
+            'query' => [],
+            'mutation' => [
+                'login' => LoginMutation::class,
             ],
-            'mutation' => [],
+            'middleware' => [],
+        ],
+        'auth' => [
+            'query' => [],
+            'mutation' => [
+                'login' => LoginMutation::class,
+            ],
             'middleware' => [],
         ],
         'user' => [
             'query' => [
-                'user' => UserQuery::class,
+                'User' => UserQuery::class,
             ],
             'mutation' => [],
             'middleware' => [],
         ],
     ],
     'types' => [
-        'user' => UserType::class,
+        'User' => UserType::class,
+        'AuthToken' => AuthTokenType::class,
     ],
 
     // This callable will be passed the Error object for each errors GraphQL catch.
@@ -83,7 +86,8 @@ return [
     //     'message' => '',
     //     'locations' => [],
     // ],
-    'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],
+    // 'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],
+    'error_formatter' => [\Damit\Exceptions\Handler::class, 'formatError'],
 
     // You can set the key, which will be used to retrieve the dynamic variables
     'params_key' => 'params',

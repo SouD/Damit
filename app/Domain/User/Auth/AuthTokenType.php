@@ -1,5 +1,5 @@
 <?php
-namespace Domain\User;
+namespace Domain\User\Auth;
 
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as BaseType;
@@ -7,7 +7,7 @@ use Rebing\GraphQL\Support\Type as BaseType;
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
-class UserType extends BaseType
+class AuthTokenType extends BaseType
 {
     /**
      * @return array
@@ -15,9 +15,9 @@ class UserType extends BaseType
     public function attributes(): array
     {
         return [
-            'name' => 'User',
-            'description' => trans('user.type.attribute.description'),
-            'model' => User::class,
+            'name' => 'AuthToken',
+            'description' => trans('user.auth_token.type.attribute.description'),
+            'model' => AuthToken::class,
         ];
     }
 
@@ -27,23 +27,34 @@ class UserType extends BaseType
     public function fields(): array
     {
         return [
-            'email' => [
+            'token' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.type.field.email.description'),
+                'description' => trans('user.auth_token.type.field.token.description'),
+            ],
+            'expiresAt' => [
+                'type' => Type::nonNull(Type::string()),
+                'description' => trans('user.auth_token.type.field.expiresAt.description'),
             ],
             'createdAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.type.field.createdAt.description'),
+                'description' => trans('user.auth_token.type.field.createdAt.description'),
             ],
             'updatedAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.type.field.updatedAt.description'),
-            ],
-            'isAdmin' => [
-                'type' => Type::nonNull(Type::boolean()),
-                'description' => trans('user.type.field.isAdmin.description'),
+                'description' => trans('user.auth_token.type.field.updatedAt.description'),
             ],
         ];
+    }
+
+    /**
+     * @param mixed $root
+     * @param array $args
+     *
+     * @return string
+     */
+    protected function resolveExpiresAtField($root, array $args): string
+    {
+        return $root->expires_at->toAtomString();
     }
 
     /**

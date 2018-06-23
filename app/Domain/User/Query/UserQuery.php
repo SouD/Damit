@@ -2,9 +2,10 @@
 namespace Domain\User\Query;
 
 use Domain\User\User;
+use Domain\User\UserRepository;
 use GraphQL;
 use GraphQL\Type\Definition\Type;
-use Infrastructure\Model\AbstractQuery as Query;
+use Infrastructure\GraphQL\AbstractQuery as Query;
 
 /**
  * @author Linus Sörensen <linus@soud.se>
@@ -12,9 +13,17 @@ use Infrastructure\Model\AbstractQuery as Query;
 class UserQuery extends Query
 {
     /**
-     * @var string
+     * @var UserRepository
      */
-    protected $modelClass = User::class;
+    protected $users;
+
+    /**
+     * @param UserRepository $users
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this->users = $users;
+    }
 
     /**
      * @return array
@@ -22,7 +31,7 @@ class UserQuery extends Query
     public function attributes(): array
     {
         return [
-            'name' => 'user',
+            'name' => 'User',
         ];
     }
 
@@ -31,7 +40,7 @@ class UserQuery extends Query
      */
     public function type(): Type
     {
-        return GraphQL::type('user');
+        return GraphQL::type('User');
     }
 
     /**
@@ -49,17 +58,16 @@ class UserQuery extends Query
 
     /**
      * @param mixed $root
-     * @param mixed $args
+     * @param array $args
      *
      * @return User|null
      */
-    public function resolve($root, $args): ?User
+    public function resolve($root, array $args): ?User
     {
         $email = array_get($args, 'email');
 
         if ($email) {
-            return $this->getRepository()
-                ->byEmail($email)
+            return $this->users->byEmail($email)
                 ->first();
         }
     }

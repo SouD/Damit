@@ -33,7 +33,7 @@ class AuthToken extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsTo(User::class);
     }

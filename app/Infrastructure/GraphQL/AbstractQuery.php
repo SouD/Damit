@@ -1,8 +1,7 @@
 <?php
-namespace Infrastructure\Model;
+namespace Infrastructure\GraphQL;
 
 use Infrastructure\Concern\HasGuard;
-use Infrastructure\Concern\HasModelRepository;
 use Rebing\GraphQL\Support\Query;
 
 /**
@@ -10,5 +9,5 @@ use Rebing\GraphQL\Support\Query;
  */
 abstract class AbstractQuery extends Query
 {
-    use HasModelRepository, HasGuard;
+    use HasGuard;
 }
