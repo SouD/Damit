@@ -56,7 +56,7 @@ class LoginMutation extends Mutation
         return [
             'provider' => [
                 'name' => 'provider',
-                'type' => Type::string(),
+                'type' => Type::nonNull(Type::string()),
             ],
             'providerId' => [
                 'name' => 'providerId',

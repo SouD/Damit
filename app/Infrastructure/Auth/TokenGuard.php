@@ -124,6 +124,42 @@ class TokenGuard extends BaseGuard
     }
 
     /**
+     * @param Authenticatable|null user
+     * @param bool $everywhere
+     *
+     * @return bool
+     */
+    public function logout(Authenticatable $user = null, bool $everywhere = true): bool
+    {
+        $user = $user ?: $this->user();
+
+        if (!$user) {
+            return false;
+        }
+
+        if (!$everywhere) {
+            $token = $this->getTokenForRequest();
+
+            if ($token) {
+                $this->tokens->byToken($token);
+            } else {
+                // If we're not supposed to log the user out everywhere and
+                // there is no token here we have to abort!
+                return false;
+            }
+        }
+
+        $this->tokens->byUser($user)
+            ->delete();
+
+        $this->fireLogoutEvent($user);
+
+        $this->user = null;
+
+        return true;
+    }
+
+    /**
      * @param Authenticatable $user
      */
     public function fireAuthenticatedEvent(Authenticatable $user): void

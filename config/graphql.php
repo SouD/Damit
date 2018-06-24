@@ -4,6 +4,7 @@ use Domain\User\Auth\AuthTokenType;
 use Domain\User\Query\UserQuery;
 use Domain\User\UserType;
 use Infrastructure\Auth\Mutation\LoginMutation;
+use Infrastructure\Auth\Mutation\LogoutMutation;
 use Rebing\GraphQL\GraphQLController;
 
 return [
@@ -63,6 +64,7 @@ return [
             'query' => [],
             'mutation' => [
                 'login' => LoginMutation::class,
+                'logout' => LogoutMutation::class, // Auth required.
             ],
             'middleware' => [],
         ],
@@ -90,7 +92,7 @@ return [
     'error_formatter' => [\Damit\Exceptions\Handler::class, 'formatError'],
 
     // You can set the key, which will be used to retrieve the dynamic variables
-    'params_key' => 'params',
+    'params_key' => 'variables',
 
     /*
      * Options to limit the query complexity and depth. See the doc
