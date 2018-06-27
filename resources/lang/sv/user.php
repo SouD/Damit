@@ -9,13 +9,19 @@ return [
             'email' => [
                 'description' => 'Användarens e-postadress.',
             ],
-            'createdAt' => [
+            'logins' => [
+                'description' => 'Användarens antal inloggningar.',
+            ],
+            'last_login_at' => [
+                'description' => 'Användarens loggade senast in detta datum.',
+            ],
+            'created_at' => [
                 'description' => 'Användaren skapades detta datum.',
             ],
-            'updatedAt' => [
+            'updated_at' => [
                 'description' => 'Användaren uppdaterades detta datum.',
             ],
-            'isAdmin' => [
+            'is_admin' => [
                 'description' => 'Användaren är administratör eller ej.',
             ],
         ],
@@ -29,13 +35,13 @@ return [
                 'token' => [
                     'description' => 'Inloggningsnyckel.',
                 ],
-                'expiresAt' => [
+                'expires_at' => [
                     'description' => 'Inloggningsnyckelen löper ut detta datum.',
                 ],
-                'createdAt' => [
+                'created_at' => [
                     'description' => 'Inloggningsnyckelen skapades detta datum.',
                 ],
-                'updatedAt' => [
+                'updated_at' => [
                     'description' => 'Inloggningsnyckelen uppdaterades detta datum.',
                 ],
             ],

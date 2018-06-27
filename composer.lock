@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33ae7ede0160a49512b74ea9b41bf59d",
+    "content-hash": "5fb7ce89a202a27f247bbdc78ef441e2",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1340,62 +1340,6 @@
                 "react"
             ],
             "time": "2018-06-04T17:54:22+00:00"
-        },
-        {
-            "name": "spatie/laravel-binary-uuid",
-            "version": "1.1.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-binary-uuid.git",
-                "reference": "adf51bfce6ef2b33622528df912244b433ddd79d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-binary-uuid/zipball/adf51bfce6ef2b33622528df912244b433ddd79d",
-                "reference": "adf51bfce6ef2b33622528df912244b433ddd79d",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/queue": "~5.5.28|~5.6.0",
-                "php": "^7.1",
-                "ramsey/uuid": "^3.7"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^3.5|~3.6.0",
-                "phpunit/phpunit": "^6.5|^7.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Spatie\\BinaryUuid\\UuidServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\BinaryUuid\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brent Roose",
-                    "email": "brent@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Binary support for UUIDs in Laravel",
-            "homepage": "https://github.com/spatie/laravel-binary-uuid",
-            "keywords": [
-                "laravel-binary-uuid",
-                "spatie"
-            ],
-            "time": "2018-03-01T13:27:19+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

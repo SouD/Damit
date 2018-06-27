@@ -9,13 +9,19 @@ return [
             'email' => [
                 'description' => 'User email address.',
             ],
-            'createdAt' => [
+            'logins' => [
+                'description' => 'User logins.',
+            ],
+            'last_login_at' => [
+                'description' => 'User last login at.',
+            ],
+            'created_at' => [
                 'description' => 'User created at.',
             ],
-            'updatedAt' => [
+            'updated_at' => [
                 'description' => 'User updated at.',
             ],
-            'isAdmin' => [
+            'is_admin' => [
                 'description' => 'User is admin or not.',
             ],
         ],
@@ -29,13 +35,13 @@ return [
                 'token' => [
                     'description' => 'Auth token token.',
                 ],
-                'expiresAt' => [
+                'expires_at' => [
                     'description' => 'Auth token expires at.',
                 ],
-                'createdAt' => [
+                'created_at' => [
                     'description' => 'Auth token created at.',
                 ],
-                'updatedAt' => [
+                'updated_at' => [
                     'description' => 'Auth token updated at.',
                 ],
             ],

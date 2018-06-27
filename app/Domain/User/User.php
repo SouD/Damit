@@ -11,12 +11,12 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Support\Facades\Hash;
-use Infrastructure\Model\AbstractModel as BaseModel;
+use Infrastructure\Model\AbstractModel as Model;
 
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
-class User extends BaseModel implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, SoftDeletes;
 
@@ -25,9 +25,12 @@ class User extends BaseModel implements AuthenticatableContract, AuthorizableCon
     protected $fillable = [
         'email',
         'password',
+        'logins',
+        'last_login_at',
     ];
 
     protected $dates = [
+        'last_login_at',
         'deleted_at',
     ];
 

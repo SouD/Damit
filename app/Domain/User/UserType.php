@@ -31,19 +31,38 @@ class UserType extends BaseType
                 'type' => Type::nonNull(Type::string()),
                 'description' => trans('user.type.field.email.description'),
             ],
+            'logins' => [
+                'type' => Type::nonNull(Type::int()),
+                'description' => trans('user.type.field.logins.description'),
+            ],
+            'lastLoginAt' => [
+                'type' => Type::string(),
+                'description' => trans('user.type.field.last_login_at.description'),
+            ],
             'createdAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.type.field.createdAt.description'),
+                'description' => trans('user.type.field.created_at.description'),
             ],
             'updatedAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.type.field.updatedAt.description'),
+                'description' => trans('user.type.field.updated_at.description'),
             ],
             'isAdmin' => [
                 'type' => Type::nonNull(Type::boolean()),
-                'description' => trans('user.type.field.isAdmin.description'),
+                'description' => trans('user.type.field.is_admin.description'),
             ],
         ];
+    }
+
+    /**
+     * @param mixed $root
+     * @param array $args
+     *
+     * @return string
+     */
+    protected function resolveLastLoginAtField($root, array $args): string
+    {
+        return $root->last_login_at->toAtomString();
     }
 
     /**
@@ -66,5 +85,16 @@ class UserType extends BaseType
     protected function resolveUpdatedAtField($root, array $args): string
     {
         return $root->updated_at->toAtomString();
+    }
+
+    /**
+     * @param mixed $root
+     * @param array $args
+     *
+     * @return bool
+     */
+    protected function resolveIsAdminField($root, array $args): boolean
+    {
+        return $root->is_admin;
     }
 }

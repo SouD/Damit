@@ -33,15 +33,15 @@ class AuthTokenType extends BaseType
             ],
             'expiresAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.auth_token.type.field.expiresAt.description'),
+                'description' => trans('user.auth_token.type.field.expires_at.description'),
             ],
             'createdAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.auth_token.type.field.createdAt.description'),
+                'description' => trans('user.auth_token.type.field.created_at.description'),
             ],
             'updatedAt' => [
                 'type' => Type::nonNull(Type::string()),
-                'description' => trans('user.auth_token.type.field.updatedAt.description'),
+                'description' => trans('user.auth_token.type.field.updated_at.description'),
             ],
         ];
     }
