@@ -27,7 +27,7 @@ return [
     ],
     'passwords' => [
         'users' => [
-            'provider' => 'damit',
+            'provider' => 'damit_users',
             'table' => 'password_resets',
             'expire' => 60,
         ],
