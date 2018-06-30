@@ -7,9 +7,6 @@ use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run()
     {
         $role = Role::where('name', RoleName::ADMIN)
