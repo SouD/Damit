@@ -9,7 +9,7 @@ use Infrastructure\GraphQL\AbstractMutation as Mutation;
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
-class ForgotPasswordMutation extends Mutation
+class ResetPasswordMutation extends Mutation
 {
     /**
      * @return array
@@ -17,7 +17,7 @@ class ForgotPasswordMutation extends Mutation
     public function attributes(): array
     {
         return [
-            'name' => 'forgotPassword',
+            'name' => 'resetPassword',
         ];
     }
 
@@ -39,6 +39,18 @@ class ForgotPasswordMutation extends Mutation
                 'name' => 'email',
                 'type' => Type::nonNull(Type::string()),
             ],
+            'token' => [
+                'name' => 'token',
+                'type' => Type::nonNull(Type::string()),
+            ],
+            'password' => [
+                'name' => 'password',
+                'type' => Type::nonNull(Type::string()),
+            ],
+            'passwordConfirmation' => [
+                'name' => 'passwordConfirmation',
+                'type' => Type::nonNull(Type::string()),
+            ],
         ];
     }
 
@@ -51,6 +63,9 @@ class ForgotPasswordMutation extends Mutation
     {
         return [
             'email' => ['required', 'email'],
+            'token' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:6', 'same:passwordConfirmation'],
+            'passwordConfirmation' => ['required', 'string'],
         ];
     }
 
@@ -64,10 +79,17 @@ class ForgotPasswordMutation extends Mutation
      */
     public function resolve($root, array $args): bool
     {
+        $credentials = array_only($args, [
+            'email', 'password', 'passwordConfirmation', 'token',
+        ]);
+        $credentials['password_confirmation'] = array_get($credentials,
+            'passwordConfirmation');
         $response = Password::broker()
-            ->sendResetLink(array_only($args, ['email']));
+            ->reset($credentials, function ($user, $password) {
+                $this->resetPassword($user, $password);
+            });
 
-        if (Password::RESET_LINK_SENT === $response) {
+        if (Password::PASSWORD_RESET === $response) {
             return true;
         } else {
             throw ValidationException::withMessages([

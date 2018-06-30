@@ -6,6 +6,7 @@ use Domain\User\UserType;
 use Infrastructure\Auth\Mutation\ForgotPasswordMutation;
 use Infrastructure\Auth\Mutation\LoginMutation;
 use Infrastructure\Auth\Mutation\LogoutMutation;
+use Infrastructure\Auth\Mutation\ResetPasswordMutation;
 use Rebing\GraphQL\GraphQLController;
 
 return [
@@ -67,6 +68,7 @@ return [
                 'login' => LoginMutation::class,
                 'logout' => LogoutMutation::class, // Auth required.
                 'forgotPassword' => ForgotPasswordMutation::class,
+                'resetPassword' => ResetPasswordMutation::class,
             ],
             'middleware' => [],
         ],

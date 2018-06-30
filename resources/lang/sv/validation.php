@@ -124,8 +124,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password' => [
+            'same' => 'Lösenordet och lösenordsbekräftelsen måste vara samma.',
         ],
     ],
 
@@ -146,5 +146,7 @@ return [
         'token' => 'Nyckel',
         'provider' => 'Leverantör',
         'providerId' => 'Leverantörs-ID',
+        'password' => 'Lösenord',
+        'passwordConfirmation' => 'Bekräfta Lösenord',
     ],
 ];

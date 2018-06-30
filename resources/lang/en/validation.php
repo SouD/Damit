@@ -113,8 +113,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password' => [
+            'same' => 'Password and Password Confirmation must match.',
         ],
     ],
 
@@ -135,5 +135,7 @@ return [
         'token' => 'Token',
         'provider' => 'Provider',
         'providerId' => 'Provider ID',
+        'password' => 'Password',
+        'passwordConfirmation' => 'Password Confirmation',
     ],
 ];
