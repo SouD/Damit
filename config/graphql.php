@@ -1,7 +1,7 @@
 <?php
 
 use Domain\User\Auth\AuthTokenType;
-use Domain\User\Query\UserQuery;
+use Domain\User\Query\CurrentUserQuery;
 use Domain\User\UserType;
 use Infrastructure\Auth\Mutation\ForgotPasswordMutation;
 use Infrastructure\Auth\Mutation\LoginMutation;
@@ -74,10 +74,10 @@ return [
         ],
         'user' => [
             'query' => [
-                'User' => UserQuery::class,
+                'CurrentUser' => CurrentUserQuery::class,
             ],
             'mutation' => [],
-            'middleware' => [],
+            'middleware' => ['auth:api'],
         ],
     ],
     'types' => [

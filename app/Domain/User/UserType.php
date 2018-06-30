@@ -60,9 +60,9 @@ class UserType extends BaseType
      *
      * @return string
      */
-    protected function resolveLastLoginAtField($root, array $args): string
+    protected function resolveLastLoginAtField($root, array $args): ?string
     {
-        return $root->last_login_at->toAtomString();
+        return optional($root->last_login_at)->toAtomString();
     }
 
     /**
@@ -93,7 +93,7 @@ class UserType extends BaseType
      *
      * @return bool
      */
-    protected function resolveIsAdminField($root, array $args): boolean
+    protected function resolveIsAdminField($root, array $args): bool
     {
         return $root->is_admin;
     }

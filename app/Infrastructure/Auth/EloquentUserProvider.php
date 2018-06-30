@@ -30,7 +30,8 @@ class EloquentUserProvider extends BaseUserProvider
                     $relation = $parts->implode('.');
 
                     $query->whereHas($relation, function ($query) use ($column, $value) {
-                        $query->where($column, $value);
+                        $query->where($column, $value)
+                            ->where('expires_at', '>=', now()); // This will break if relation does not have an expires_at column!
                     });
                 } else {
                     $query->where($key, $value);
