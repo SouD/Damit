@@ -10,63 +10,63 @@ class CategorySeeder extends Seeder
         $clothing = Category::create([
             'slug' => 'clothing',
             'en' => ['name' => 'Clothing'],
-            'se' => ['name' => 'Kläder'],
+            'sv' => ['name' => 'Kläder'],
             'tl' => ['name' => 'Damit'],
         ]);
 
         Category::create([
             'slug' => 'dresses',
             'en' => ['name' => 'Dresses'],
-            'se' => ['name' => 'Klänningar'],
+            'sv' => ['name' => 'Klänningar'],
             'tl' => ['name' => 'Dresses'],
         ], $clothing);
 
         Category::create([
             'slug' => 'sweaters',
             'en' => ['name' => 'Sweaters'],
-            'se' => ['name' => 'Tröjor'],
+            'sv' => ['name' => 'Tröjor'],
             'tl' => ['name' => 'Sweaters'],
         ], $clothing);
 
         Category::create([
             'slug' => 'shirts',
             'en' => ['name' => 'Shirts'],
-            'se' => ['name' => 'Skjortor'],
+            'sv' => ['name' => 'Skjortor'],
             'tl' => ['name' => 'Shirts'],
         ], $clothing);
 
         Category::create([
             'slug' => 't-shirts',
             'en' => ['name' => 'T-shirts'],
-            'se' => ['name' => 'T-shirts'],
+            'sv' => ['name' => 'T-shirts'],
             'tl' => ['name' => 'T-shirts'],
         ], $clothing);
 
         Category::create([
             'slug' => 'shorts',
             'en' => ['name' => 'Shorts'],
-            'se' => ['name' => 'Shorts'],
+            'sv' => ['name' => 'Shorts'],
             'tl' => ['name' => 'Shorts'],
         ], $clothing);
 
         $pants = Category::create([
             'slug' => 'pants',
             'en' => ['name' => 'Pants'],
-            'se' => ['name' => 'Byxor'],
+            'sv' => ['name' => 'Byxor'],
             'tl' => ['name' => 'Pantalon'],
         ], $clothing);
 
         Category::create([
             'slug' => 'jeans',
             'en' => ['name' => 'Jeans'],
-            'se' => ['name' => 'Jeans'],
+            'sv' => ['name' => 'Jeans'],
             'tl' => ['name' => 'Jeans'],
         ], $pants);
 
         Category::create([
             'slug' => 'slacks',
             'en' => ['name' => 'Slacks'],
-            'se' => ['name' => 'Slacks'],
+            'sv' => ['name' => 'Slacks'],
             'tl' => ['name' => 'Slacks'],
         ], $pants);
     }

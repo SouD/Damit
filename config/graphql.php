@@ -1,5 +1,7 @@
 <?php
 
+use Domain\Category\CategoryType;
+use Domain\Category\Query\CategoryQuery;
 use Domain\User\Auth\AuthTokenType;
 use Domain\User\Query\CurrentUserQuery;
 use Domain\User\UserType;
@@ -72,6 +74,13 @@ return [
             ],
             'middleware' => [],
         ],
+        'category' => [
+            'query' => [
+                'Category' => CategoryQuery::class,
+            ],
+            'mutation' => [],
+            'middleware' => [],
+        ],
         'user' => [
             'query' => [
                 'CurrentUser' => CurrentUserQuery::class,
@@ -81,8 +90,9 @@ return [
         ],
     ],
     'types' => [
-        'User' => UserType::class,
         'AuthToken' => AuthTokenType::class,
+        'Category' => CategoryType::class,
+        'User' => UserType::class,
     ],
 
     // This callable will be passed the Error object for each errors GraphQL catch.
