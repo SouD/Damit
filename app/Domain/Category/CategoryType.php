@@ -1,6 +1,7 @@
 <?php
 namespace Domain\Category;
 
+use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as BaseType;
 
@@ -42,6 +43,14 @@ class CategoryType extends BaseType
             'updatedAt' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => trans('category.type.field.updated_at.description'),
+            ],
+            'parent' => [
+                'type' => GraphQL::type('Category'),
+                'description' => trans('category.type.field.parent.description'),
+            ],
+            'children' => [
+                'type' => Type::listOf(GraphQL::type('Category')),
+                'description' => trans('category.type.field.children.description'),
             ],
         ];
     }

@@ -20,6 +20,7 @@ class Category extends Model
 
     protected $hidden = [
         'id',
+        'parent_id',
         '_lft',
         '_rgt',
     ];
