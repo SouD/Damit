@@ -2,6 +2,10 @@
 
 use Domain\Category\CategoryType;
 use Domain\Category\Query\CategoryQuery;
+use Domain\Country\CountryType;
+use Domain\Country\Query\CountriesQuery;
+use Domain\Currency\CurrencyType;
+use Domain\Currency\Query\CurrenciesQuery;
 use Domain\User\Auth\AuthTokenType;
 use Domain\User\Query\CurrentUserQuery;
 use Domain\User\UserType;
@@ -81,6 +85,20 @@ return [
             'mutation' => [],
             'middleware' => [],
         ],
+        'country' => [
+            'query' => [
+                'Countries' => CountriesQuery::class,
+            ],
+            'mutation' => [],
+            'middleware' => [],
+        ],
+        'currency' => [
+            'query' => [
+                'Currencies' => CurrenciesQuery::class,
+            ],
+            'mutation' => [],
+            'middleware' => [],
+        ],
         'user' => [
             'query' => [
                 'CurrentUser' => CurrentUserQuery::class,
@@ -92,6 +110,8 @@ return [
     'types' => [
         'AuthToken' => AuthTokenType::class,
         'Category' => CategoryType::class,
+        'Country' => CountryType::class,
+        'Currency' => CurrencyType::class,
         'User' => UserType::class,
     ],
 

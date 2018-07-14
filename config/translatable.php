@@ -3,7 +3,7 @@
 return [
     'locales' => [
         'en',
-        'se',
+        'sv',
         'tl',
         // 'es' => [
         //     'MX', // mexican spanish
