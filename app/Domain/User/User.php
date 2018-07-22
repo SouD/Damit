@@ -2,7 +2,6 @@
 namespace Domain\User;
 
 use Domain\User\Auth\AuthProvider;
-use Domain\User\Auth\AuthToken;
 use Domain\User\Role\Role;
 use Domain\User\Role\RoleName;
 use Illuminate\Auth\Authenticatable;
@@ -15,11 +14,12 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Infrastructure\Model\AbstractModel as Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @author Linus Sörensen <linus@soud.se>
  */
-class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract, JWTSubject
 {
     use Authenticatable, Authorizable, CanResetPassword, Notifiable, SoftDeletes;
 
@@ -41,7 +41,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'id',
         'password',
         'authProviders',
-        'authTokens',
     ];
 
     protected $appends = [
@@ -67,6 +66,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasRole(RoleName::ADMIN);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
     /***************************************************************************
      * Relationships
      **************************************************************************/
@@ -85,24 +100,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function authProviders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(AuthProvider::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function authTokens(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(AuthToken::class);
-    }
-
-    /**
-     * @return AuthToken|null
-     */
-    public function newestAuthToken(): ?AuthToken
-    {
-        return $this->authTokens()
-            ->orderBy('created_at', 'desc')
-            ->first();
     }
 
     /***************************************************************************

@@ -4,7 +4,7 @@ return [
     'name' => env('APP_NAME', 'Damit'),
     'env' => env('APP_ENV', 'local'),
     'debug' => env('APP_DEBUG', false),
-    'url' => env('APP_URL', 'http://api.damit.test'),
+    'url' => env('APP_URL', 'http://127.0.0.1:8081'),
     'domain' => env('APP_DOMAIN', 'damit.test'),
     'timezone' => env('APP_TIMEZONE', 'UTC'),
     'locale' => env('APP_LOCALE', 'en'),

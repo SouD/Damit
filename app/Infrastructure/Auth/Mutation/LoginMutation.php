@@ -2,8 +2,6 @@
 namespace Infrastructure\Auth\Mutation;
 
 use Domain\User\Auth\AuthProviderName;
-use Domain\User\Auth\AuthToken;
-use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Support\Facades\Request;
@@ -45,7 +43,7 @@ class LoginMutation extends Mutation
      */
     public function type(): Type
     {
-        return GraphQL::type('AuthToken');
+        return Type::string();
     }
 
     /**
@@ -99,9 +97,9 @@ class LoginMutation extends Mutation
      *
      * @throws ValidationException
      *
-     * @return AuthToken|null
+     * @return string|null
      */
-    public function resolve($root, array $args): ?AuthToken
+    public function resolve($root, array $args): ?string
     {
         $this->resolveArgs = $args;
         $request = Request::instance(); // Needed for the lockout mechanism.
@@ -114,11 +112,11 @@ class LoginMutation extends Mutation
         }
 
         $provider = $this->getProvider($args);
+        $token = $this->guard()
+            ->attemptLogin($args, $provider);
 
-        if ($this->attemptLogin($args, $provider)) {
-            return $this->guard()
-                ->user()
-                ->newestAuthToken();
+        if ($token) {
+            return $token;
         }
 
         $this->incrementLoginAttempts($request);
@@ -151,17 +149,5 @@ class LoginMutation extends Mutation
         }
 
         return $this->provider;
-    }
-
-    /**
-     * @param array args
-     * @param string|null $provider
-     *
-     * @return bool
-     */
-    protected function attemptLogin(array $args, string $provider = null): bool
-    {
-        return $this->guard()
-            ->attempt($args, $provider);
     }
 }

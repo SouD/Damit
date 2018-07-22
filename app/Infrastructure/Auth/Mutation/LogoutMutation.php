@@ -33,8 +33,8 @@ class LogoutMutation extends Mutation
     public function args(): array
     {
         return [
-            'everywhere' => [
-                'name' => 'everywhere',
+            'forever' => [
+                'name' => 'forever',
                 'type' => Type::boolean(),
             ],
         ];
@@ -59,9 +59,9 @@ class LogoutMutation extends Mutation
      */
     public function resolve($root, array $args): bool
     {
-        $everywhere = (bool) array_get($args, 'everywhere', false);
+        $forever = (bool) array_get($args, 'forever', false);
 
         return $this->guard()
-            ->logout(null, $everywhere);
+            ->logout($forever);
     }
 }

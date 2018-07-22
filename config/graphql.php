@@ -6,7 +6,6 @@ use Domain\Country\CountryType;
 use Domain\Country\Query\CountriesQuery;
 use Domain\Currency\CurrencyType;
 use Domain\Currency\Query\CurrenciesQuery;
-use Domain\User\Auth\AuthTokenType;
 use Domain\User\Query\CurrentUserQuery;
 use Domain\User\UserType;
 use Infrastructure\Auth\Mutation\ForgotPasswordMutation;
@@ -108,7 +107,6 @@ return [
         ],
     ],
     'types' => [
-        'AuthToken' => AuthTokenType::class,
         'Category' => CategoryType::class,
         'Country' => CountryType::class,
         'Currency' => CurrencyType::class,

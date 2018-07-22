@@ -2,17 +2,15 @@
 namespace Infrastructure\Auth;
 
 use Domain\User\Auth\AuthProviderName;
-use Domain\User\Auth\AuthTokenRepository;
 use Illuminate\Auth\Events\Authenticated as AuthenticatedEvent;
 use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\Logout as LogoutEvent;
-use Illuminate\Auth\TokenGuard as BaseGuard;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Http\Request;
 use Infrastructure\Auth\Strategy\EmailStrategy;
 use Infrastructure\Auth\Strategy\FacebookStrategy;
 use Infrastructure\Auth\Strategy\StrategyContract;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\JWTGuard as BaseGuard;
 
 /**
  * @author Linus Sörensen <linus@soud.se>
@@ -20,67 +18,40 @@ use Infrastructure\Auth\Strategy\StrategyContract;
 class TokenGuard extends BaseGuard
 {
     /**
-     * @var AuthTokenRepository
-     */
-    protected $tokens;
-
-    /**
-     * @param UserProvider        $provider
-     * @param Request             $request
-     * @param AuthTokenRepository $tokens
-     */
-    public function __construct(UserProvider $provider, Request $request,
-        AuthTokenRepository $tokens)
-    {
-        parent::__construct($provider, $request);
-
-        $this->tokens = $tokens;
-        $this->inputKey = 'token';
-        $this->storageKey = 'authTokens.token';
-    }
-
-    public function getTokenForRequest()
-    {
-        $token = $this->request->bearerToken();
-
-        if (empty($token)) {
-            $token = $this->request->header('Authorization');
-        }
-
-        if (empty($token)) {
-            $token = $this->request->input($this->inputKey);
-        }
-
-        return $token;
-    }
-
-    /**
      * @param array       $credentials
      * @param string|null $provider
      *
-     * @return bool
+     * @return bool|string
      */
-    public function attempt(array $credentials, string $provider = null): bool
+    public function attemptLogin(array $credentials, string $provider = null)
     {
         $provider = $provider ?: AuthProviderName::EMAIL;
         $strategy = $this->getProviderStrategy($provider);
-        $user = $strategy->getUser($credentials);
+        $this->lastAttempted = $user = $strategy->getUser($credentials);
 
         if ($user) {
-            $this->setUser($user);
-
-            $token = $this->tokens->create([
-                'user_id' => $user->id,
-                'token' => $this->generateToken(),
-                'expires_at' => now()->addDays(14),
-            ]);
-
-            $this->fireLoginEvent($user);
-
-            return true;
+            return $this->login($user);
         } else {
             return false;
         }
+    }
+
+    /**
+     * @param JWTSubject $user
+     *
+     * @return string
+     */
+    public function login(JWTSubject $user): string
+    {
+        $token = $this->jwt->fromUser($user);
+        $this->setToken($token)
+            ->setUser($user);
+
+        $this->fireAuthenticatedEvent($user);
+
+        $this->fireLoginEvent($user);
+
+        return $token;
     }
 
     /**
@@ -110,53 +81,19 @@ class TokenGuard extends BaseGuard
     }
 
     /**
-     * @param Authenticatable $user
-     *
-     * @return $this
+     * @param bool $forceForever
      */
-    public function setUser(Authenticatable $user)
+    public function logout($forceForever = false)
     {
-        $this->user = $user;
+        $this->requireToken()
+            ->invalidate($forceForever);
 
-        $this->fireAuthenticatedEvent($user);
-
-        return $this;
-    }
-
-    /**
-     * @param Authenticatable|null user
-     * @param bool $everywhere
-     *
-     * @return bool
-     */
-    public function logout(Authenticatable $user = null, bool $everywhere = true): bool
-    {
-        $user = $user ?: $this->user();
-
-        if (!$user) {
-            return false;
-        }
-
-        if (!$everywhere) {
-            $token = $this->getTokenForRequest();
-
-            if ($token) {
-                $this->tokens->byToken($token);
-            } else {
-                // If we're not supposed to log the user out everywhere and
-                // there is no token here we have to abort!
-                return false;
-            }
-        }
-
-        $this->tokens->byUser($user)
-            ->delete();
-
-        $this->fireLogoutEvent($user);
-
+        $user = $this->user();
         $this->user = null;
 
-        return true;
+        $this->jwt->unsetToken();
+
+        $this->fireLogoutEvent($user);
     }
 
     /**
@@ -181,13 +118,5 @@ class TokenGuard extends BaseGuard
     public function fireLogoutEvent(Authenticatable $user): void
     {
         event(new LogoutEvent($user));
-    }
-
-    /**
-     * @return string
-     */
-    public function generateToken(): string
-    {
-        return bin2hex(random_bytes(78));
     }
 }
